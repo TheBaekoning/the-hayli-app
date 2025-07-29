@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: admin
+      changes:
+        - createTable:
+            tableName: medications
+            columns:
+              - column:
+                  name: medicationId
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: userId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_medications_users
+              - column:
+                  name: medicationName
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dosage
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: userId
+            baseTableName: medications
+            constraintName: fk_medications_users
+            onDelete: CASCADE
+            referencedColumnNames: userId
+            referencedTableName: users
+

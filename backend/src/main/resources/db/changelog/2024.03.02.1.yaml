@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: doug
+      changes:
+        - addColumn:
+            tableName: moods
+            columns:
+              - column:
+                  name: notes
+                  type: varchar(280)
+                  constraints:
+                    nullable: true

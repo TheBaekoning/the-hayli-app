@@ -1,0 +1,71 @@
+$ff: ReemKufi, Arial, Helvetica, sans-serif;
+
+$side-spacing: 1rem;
+
+$main-color: #00e3c8;
+
+$natural-palette: (
+	1: $main-color,
+	2: #589d90,
+	3: #effcf9,
+	4: #e8f3f1,
+);
+
+$greens: (
+	1: $main-color,
+	2: #00c3bf,
+	3: #00a2af,
+	4: #138397,
+	5: #2b6479,
+	6: #2f4858,
+);
+
+$theme-gradient: (
+	1: $main-color,
+	2: #00cadc,
+	3: #00ade0,
+	4: #308ed1,
+	5: #686db0,
+	6: #7a4e84,
+);
+
+$spot-palette: (
+	1: $main-color,
+	2: #4ca293,
+	3: #c4fcf0,
+	4: #74178c
+);
+
+$discreet-palette: (
+	1: $main-color,
+	2: #589d90,
+	3: #eafdf9,
+	4: #545479
+);
+
+$threedom: (
+	1: $main-color,
+	2: #9588f6,
+	3: #e9812e
+);
+
+@mixin visually-hidden {
+	position: absolute !important;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+@mixin hide-list-markers {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		margin-bottom: 0;
+
+		&::before {
+			// To make accessible to screen readers to read off as list item
+			content: "\200b";
+			@include visually-hidden;
+		}
+	}
+}

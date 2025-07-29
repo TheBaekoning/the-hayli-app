@@ -1,0 +1,13 @@
+{
+	"appId": "com.hayli.app",
+	"appName": "Hayli",
+	"webDir": "build",
+	"bundledWebRuntime": false,
+	"loggingBehavior": "debug",
+	"server": {
+		"allowNavigation": [
+			"https://api.haylihealth.com/*",
+			"https://haylihealthapi.share.zrok.io/*"
+		]
+	}
+}

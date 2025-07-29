@@ -1,0 +1,54 @@
+# dev MYSQL environment
+version: '3.1'
+
+services:
+  backend-webservice:
+    container_name: backend-webservice
+    build:
+      context: ./backend                    # directory where Dockerfile is located
+      args:
+        - PROJECT_NAME=backend
+      dockerfile: Dockerfile          # name of Dockerfile to execute
+    image: maven           # image name
+    platform: linux/amd64
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      spring.datasource.url: "jdbc:mysql://db:3306/asclepius_db"
+  db:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: asclepius_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - asclepius-dev:/var/lib/mysql
+
+  rabbitmq:
+    image: 'rabbitmq:latest'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=secret'
+      - 'RABBITMQ_DEFAULT_USER=myuser'
+    ports:
+      - '5672'
+# Names our volume
+volumes:
+  asclepius-dev:
+
+
+

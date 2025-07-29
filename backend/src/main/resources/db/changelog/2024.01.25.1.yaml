@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: admin
+      changes:
+        - createTable:
+            tableName: moods
+            columns:
+              - column:
+                  name: moodId
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: userId
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_medications_users
+              - column:
+                  name: createdAt
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updatedAt
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: moodDate
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: moodRating
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseColumnNames: userId
+            baseTableName: moods
+            constraintName: fk_moods_users
+            onDelete: CASCADE
+            referencedColumnNames: userId
+            referencedTableName: users
+
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: createdAt
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updatedAt
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+

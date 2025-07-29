@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6
+      author: doug
+      changes:
+        - addColumn:
+            tableName: userProfiles
+            columns:
+              - column:
+                  name: email
+                  type: varchar(320)
+                  constraints:
+                    nullable: true
+        - renameColumn:
+            tableName: users
+            oldColumnName: username
+            newColumnName: uuid
+            columnDataType: varchar(36)

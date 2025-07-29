@@ -1,0 +1,42 @@
+# dev MYSQL environment
+version: '3.1'
+
+services:
+  session-manager:
+    image: redis
+    container_name: asclepius-sessiondb-local-detached
+    restart: always
+    ports:
+      - '6379:6379'
+
+  db:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: asclepiusdb-local-detached
+    restart: always
+    environment:
+      MYSQL_DATABASE: asclepius_db
+      # Use 'root' instead
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - asclepius-dev-local-detached:/var/lib/mysql
+    networks:
+      - phpmyadmin_default
+# Names our volume
+volumes:
+  asclepius-dev-local-detached:
+
+networks:
+  phpmyadmin_default:
+    external: true

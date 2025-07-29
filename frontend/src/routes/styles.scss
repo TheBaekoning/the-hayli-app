@@ -1,0 +1,215 @@
+@use "../sass/global-vars";
+@use "sass:map";
+
+:root {
+	--ff: #{global-vars.$ff};
+
+	--light1: #{map.get(global-vars.$greens, 1)};
+	--light2: #{map.get(global-vars.$greens, 2)};
+	--dark1: #{map.get(global-vars.$greens, 5)};
+	--dark2: #{map.get(global-vars.$greens, 6)};
+
+	@for $natural-palette from 1 through 4 {
+		--natural#{$natural-palette}: #{map.get(global-vars.$natural-palette, $natural-palette)};
+	}
+
+	@for $greens from 1 through 6 {
+		--green#{$greens}: #{map.get(global-vars.$greens, $greens)};
+	}
+
+	@for $gradient from 1 through 6 {
+		--gradient#{$gradient}: #{map.get(global-vars.$theme-gradient, $gradient)};
+	}
+
+	@for $spot from 1 through 4 {
+		--spot#{$spot}: #{map.get(global-vars.$spot-palette, $spot)};
+	}
+
+	@for $discreet from 1 through 4 {
+		--discreet#{$discreet}: #{map.get(global-vars.$discreet-palette, $discreet)};
+	}
+
+	@for $threedom from 1 through 3 {
+		--threedom#{$threedom}: #{map.get(global-vars.$threedom, $threedom)};
+	}
+
+	--ecstatic: #731F8A;
+	--energized: #BD53CF;
+	--balanced: #00E3C8;
+	--meh: #1D8396;
+	--awful: #304858;
+
+	--side-spacing: #{global-vars.$side-spacing};
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: var(--ff);
+	color: #000;
+	background: #fff;
+	min-height: 100vh;
+
+	@media (prefers-color-scheme: dark) {
+		background: var(--dark2);
+		color: var(--light1);
+	}
+	>div{
+		height: 100%;
+	}
+}
+
+[hidden] {
+	display: none !important;
+}
+
+button {
+	cursor: pointer;
+}
+
+.not-button {
+	border: none;
+	background: none;
+	padding: 0;
+	text-align: left;
+	cursor: pointer;
+}
+
+.sr-visible,
+.visually-hidden {
+	@include global-vars.visually-hidden;
+}
+
+.breadcrumbs {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin-bottom: 10px;
+	color: var(--dark2);
+
+	&::before {
+		content: "";
+		display: block;
+		width: 1em;
+		height: 1em;
+		background: url(/icons/right-arrow.svg) center/cover no-repeat;
+		--rotate: rotate(180deg);
+		transform: var(--rotate);
+		transition: transform 0.3s ease;
+	}
+
+	&:has(a:hover, a:focus) {
+		&::before {
+			transform: translateX(-5px) var(--rotate);
+		}
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		color: var(--light2);
+
+		&::before {
+			background-image: url(/icons/right-arrow-light.svg);
+		}
+	}
+}
+
+main {
+	padding: 20px var(--side-spacing);
+	@media (min-width: 1000px){
+		margin: 0 auto;
+		max-width: 1000px;
+	}
+}
+
+h1 {
+	font: 700 1.5em/1 var(--ff);
+	margin-top: 0;
+}
+
+pre {
+	max-width: 100%;
+	overflow: hidden;
+	white-space: pre-wrap;
+}
+
+.hide-list-markers {
+	@include global-vars.hide-list-markers;
+}
+
+a,
+.link {
+	color: var(--dark2);
+	font-weight: 700;
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	transition: color 0.3s ease;
+
+	&:hover,
+	&:focus {
+		color: var(--dark1);
+	}
+
+	@media(prefers-color-scheme: dark) {
+		color: var(--light2);
+
+		&:hover,
+		&:focus {
+			color: var(--light1);
+		}
+	}
+}
+
+.not-link {
+	font-weight: inherit;
+	color: inherit;
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+}
+
+form {
+	display: flex;
+	flex-flow: column;
+	gap: 25px;
+	margin-top: 40px;
+
+	>button {
+		@extend .not-button;
+		padding: 16px;
+		font: 600 1rem var(--ff);
+		color: #fff;
+		text-align: center;
+		background: var(--dark1);
+		border: 1px solid transparent;
+		border-radius: 32px;
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		&:hover,
+		&:focus {
+			filter: brightness(1.05);
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		>button {
+			color: var(--dark2);
+			background: var(--light2);
+		}
+	}
+}

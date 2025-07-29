@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="LOG_DIRECTORY" source="logging.file.path"/>
+    <property name="LOG_NAME" value="hayli-app-backend"/>
+<property name="LOG_PREFIX" value="backend"/>
+
+<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+        <pattern>%d{ISO8601} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - ${LOG_PREFIX}: %msg%n</pattern>
+    </encoder>
+</appender>
+
+<appender name="FILE-LOGGER"
+          class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIRECTORY}/${LOG_NAME}.log</file>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%d{ISO8601} [%thread] %-5level %logger{36}.%M - ${LOG_PREFIX}: %msg%n</pattern>
+    </encoder>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <!-- rollover daily -->
+        <fileNamePattern>${LOG_DIRECTORY}/${LOG_NAME}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        <maxHistory>5</maxHistory> <!-- days -->
+
+        <maxFileSize>10MB</maxFileSize>
+
+        <totalSizeCap>100MB</totalSizeCap>
+    </rollingPolicy>
+</appender>
+
+<!--  The not ! notation acts as an if then else case for whether console logging is included and will be treated as a default -->
+<springProfile name="!no-console-log">
+
+    <logger name="com.zaxxer" level="info"/>
+
+    <logger name="app.asclepius" level="info"/>
+
+    <logger name="org.springframework" level="warn"/>
+    <root level="info">
+        <appender-ref ref="STDOUT" additivity="false"/>
+        <appender-ref ref="FILE-LOGGER" additivity="false"/>
+    </root>
+
+</springProfile>
+
+<springProfile name="no-console-log">
+    <logger name="com.zaxxer" level="info"/>
+
+    <logger name="app.asclepius" level="info"/>
+
+    <logger name="org.springframework" level="warn"/>
+    <root level="info">
+        <appender-ref ref="FILE-LOGGER" additivity="false"/>
+    </root>
+
+</springProfile>
+
+</configuration>
+

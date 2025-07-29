@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9
+      author: doug
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: verifyToken
+                  type: varchar(8)
+                  defaultOnNull: true
+                  constraints:
+                    nullable: true

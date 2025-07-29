@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: doug
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: isVerified
+                  type: tinyint
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

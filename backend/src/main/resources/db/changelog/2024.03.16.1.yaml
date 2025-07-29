@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: doug
+      changes:
+        - createTable:
+            tableName: userProfiles
+            columns:
+              - column:
+                  name: userId
+                  type: int
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: firstName
+                  type: varchar(64)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: lastName
+                  type: varchar(64)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: createdAt
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updatedAt
+                  type: timestamp
+                  constraints:
+                    nullable: true
+        - addForeignKeyConstraint:
+            baseColumnNames: userId
+            baseTableName: userProfiles
+            constraintName: fk_userProfiles_users
+            onDelete: CASCADE
+            referencedColumnNames: userId
+            referencedTableName: users

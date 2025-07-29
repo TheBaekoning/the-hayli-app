@@ -1,0 +1,8 @@
+@font-face {
+	font-family: 'Sura';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url(Sura-Regular-subset.woff2) format('woff2');
+	unicode-range: U+201C;
+}

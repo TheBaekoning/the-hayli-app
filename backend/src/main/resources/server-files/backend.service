@@ -1,0 +1,14 @@
+[Unit]
+Description=Hayli App Backend
+After=syslog.target
+
+[Service]
+User=ubuntu
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+ExecStart=/usr/bin/java $OPTIONS -jar /opt/hayli/service/backend.jar
+
+[Install]
+WantedBy=multi-user.target

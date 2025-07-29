@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10
+      author: doug
+      changes:
+        - createTable:
+            tableName: friendsAndFamily
+            columns:
+              - column:
+                  name: friendsAndFamilyId
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    unique: true
+                    nullable: false
+              - column:
+                  name: userId
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: phoneNumber
+                  type: varchar(16)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: createdAt
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updatedAt
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: lastNotified
+                  type: timestamp
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseColumnNames: userId
+            baseTableName: friendsAndFamily
+            constraintName: fk_friendsAndFamily_users
+            onDelete: CASCADE
+            referencedColumnNames: userId
+            referencedTableName: users
